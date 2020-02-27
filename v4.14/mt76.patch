@@ -1,0 +1,31 @@
+diff --git a/chromeos/config/x86_64/chromeos-intel-pineview.flavour.config b/chromeos/config/x86_64/chromeos-intel-pineview.flavour.config
+index b41028f6fefd..a032a4026bb7 100644
+--- a/chromeos/config/x86_64/chromeos-intel-pineview.flavour.config
++++ b/chromeos/config/x86_64/chromeos-intel-pineview.flavour.config
+@@ -24,6 +24,7 @@ CONFIG_INTEL_RAPL=y
+ CONFIG_INTEL_SOC_DTS_THERMAL=y
+ CONFIG_INTEL_TELEMETRY=y
+ CONFIG_IWL7000=m
++CONFIG_MT7615E=m
+ CONFIG_MEDIA_CONTROLLER=y
+ # CONFIG_MEDIA_SUBDRV_AUTOSELECT is not set
+ CONFIG_MFD_INTEL_LPSS_ACPI=y
+diff --git a/drivers/net/wireless/Kconfig b/drivers/net/wireless/Kconfig
+index 9a92cbc73134..335ecb917453 100644
+--- a/drivers/net/wireless/Kconfig
++++ b/drivers/net/wireless/Kconfig
+@@ -115,4 +115,5 @@ config USB_NET_RNDIS_WLAN
+ 	  If you choose to build a module, it'll be called rndis_wlan.
+ 
+ source "drivers/net/wireless/iwl7000/Kconfig"
++source "drivers/net/wireless/mt76/Kconfig"
+ endif # WLAN
+diff --git a/drivers/net/wireless/Makefile b/drivers/net/wireless/Makefile
+index 90df3cea4846..3238d507b05f 100644
+--- a/drivers/net/wireless/Makefile
++++ b/drivers/net/wireless/Makefile
+@@ -28,3 +28,4 @@ obj-$(CONFIG_USB_NET_RNDIS_WLAN)	+= rndis_wlan.o
+ 
+ obj-$(CONFIG_MAC80211_HWSIM)	+= mac80211_hwsim.o
+ obj-$(CONFIG_IWL7000) += iwl7000/
++obj-$(CONFIG_MT76_CORE) += mt76/
