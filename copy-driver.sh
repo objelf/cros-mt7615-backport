@@ -33,3 +33,4 @@ fi
 cp -av ./v4.14/files/* "$CROS/"
 cp -av `ls "$MT76"/*.[ch] | grep -v mt76x02` "$CROS/drivers/net/wireless/mt76/"
 cp -av "$MT76"/mt7615/*.[ch] "$CROS/drivers/net/wireless/mt76/mt7615/"
+touch "$CROS/drivers/net/wireless/mt76/airtime.c"
