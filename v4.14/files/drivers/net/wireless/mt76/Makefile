@@ -22,4 +22,4 @@ obj-$(CONFIG_MT7615E) += mt7615/
 
 mt76-y := \
 	mmio.o util.o trace.o dma.o mac80211.o debugfs.o eeprom.o \
-	tx.o agg-rx.o mcu.o airtime.o
+	tx.o agg-rx.o mcu.o airtime.o pci.o
