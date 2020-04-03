@@ -1,0 +1,56 @@
+From 59973052b4f3d1f123b196b2a2cce3f1d29c4db4 Mon Sep 17 00:00:00 2001
+From: Sean Wang <sean.wang@mediatek.com>
+Date: Wed, 1 Apr 2020 23:50:14 -0700
+Subject: [PATCH 3/3] Bluetooth: btusb: mediatek: Fix BUG for sleeping called
+ form invliad context
+
+Fix following BUG for sleeping called form invliad context
+
+[  424.940819] BUG: sleeping function called from invalid context at mm/slab.h:419
+[  424.941491] in_atomic(): 1, irqs_disabled(): 1, pid: 0, name: swapper/0
+[  424.942070] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W       4.14.172 #14
+[  424.942712] Hardware name: HP Meep/Meep, BIOS Google_Meep.11297.75.0 06/17/2019
+[  424.943375] Call Trace:
+[  424.943592]  <IRQ>
+[  424.943774]  dump_stack+0x97/0xdb
+[  424.944117]  ___might_sleep+0x138/0x161
+[  424.944440]  kmem_cache_alloc+0x4e/0x1ac
+[  424.944771]  skb_clone+0x7e/0xc1
+[  424.945096]  btusb_mtk_wmt_recv+0xc5/0x1c0 [btusb]
+[  424.945500]  __usb_hcd_giveback_urb+0xdf/0x13c
+[  424.945876]  xhci_giveback_urb_in_irq+0xda/0xf3
+[  424.946321]  xhci_irq+0x17dd/0x18e2
+[  424.946620]  __handle_irq_event_percpu+0xb1/0x1e4
+[  424.947014]  handle_irq_event_percpu+0x35/0x79
+[  424.947447]  handle_irq_event+0x36/0x55
+[  424.947769]  handle_edge_irq+0x97/0x180
+[  424.948155]  handle_irq+0xd1/0x115
+[  424.948444]  do_IRQ+0x51/0xdd
+[  424.948697]  common_interrupt+0x82/0x82
+[  424.949050]  </IRQ>
+[  424.949234] RIP: 0010:cpuidle_enter_state+0x214/0x2c6
+
+Fixes: a1c49c434e15 ("Bluetooth: btusb: Add protocol support for MediaTek MT7668U USB devices")
+Cc: stable <stable@vger.kernel.org>     # 5.3
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Change-Id: I6f25e2062e9f57dbffb03aad6249337e17ceaee4
+---
+ drivers/bluetooth/btusb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 94c896a51234..8d70d755313e 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2735,7 +2735,7 @@ static void btusb_mtk_wmt_recv(struct urb *urb)
+ 		 * and being processed the events from there then.
+ 		 */
+ 		if (test_bit(BTUSB_TX_WAIT_VND_EVT, &data->flags)) {
+-			data->evt_skb = skb_clone(skb, GFP_KERNEL);
++			data->evt_skb = skb_clone(skb, GFP_ATOMIC);
+ 			if (!data->evt_skb)
+ 				goto err_out;
+ 		}
+-- 
+2.25.1
+

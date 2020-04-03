@@ -1,0 +1,25 @@
+From e903aea26cdf7e9f14d562bc05b450a8b6c44dcd Mon Sep 17 00:00:00 2001
+From: Sean Wang <sean.wang@mediatek.com>
+Date: Thu, 2 Apr 2020 18:53:05 -0700
+Subject: [PATCH 1/3] update config for enabling mediatek btusb
+
+Change-Id: Idc5d1490b742ab8bdcdfea4a47ce865e13f4f3f7
+---
+ chromeos/config/x86_64/chromeos-intel-pineview.flavour.config | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/chromeos/config/x86_64/chromeos-intel-pineview.flavour.config b/chromeos/config/x86_64/chromeos-intel-pineview.flavour.config
+index 7edb0c6b5b11..8b87f4194122 100644
+--- a/chromeos/config/x86_64/chromeos-intel-pineview.flavour.config
++++ b/chromeos/config/x86_64/chromeos-intel-pineview.flavour.config
+@@ -26,6 +26,7 @@ CONFIG_INTEL_TELEMETRY=y
+ CONFIG_IWL7000=m
+ CONFIG_MT7615E=m
+ CONFIG_MT7663U=m
++CONFIG_BT_HCIBTUSB_MTK=y
+ CONFIG_MEDIA_CONTROLLER=y
+ # CONFIG_MEDIA_SUBDRV_AUTOSELECT is not set
+ CONFIG_MFD_INTEL_LPSS_ACPI=y
+-- 
+2.25.1
+

@@ -29,6 +29,10 @@ if grep -q MT7615E "$CROS/$CONFIG"; then
 else
 	patch -d "$CROS" -p1 < ./v4.14/mt76.patch
     patch -d "$CROS" -p1 < ./v4.14/0001-add-config-for-mt7663u.patch
+    patch -d "$CROS" -p1 < ./v4.14/0001-update-config-for-enabling-mediatek-btusb.patch
+    patch -d "$CROS" -p1 < ./v4.14/0002-Bluetooth-btusb-Add-protocol-support-for-MediaTek-MT.patch
+    patch -d "$CROS" -p1 < ./v4.14/0003-Bluetooth-btusb-mediatek-Fix-BUG-for-sleeping-called.patch
+
 fi
 
 cp -av ./v4.14/files/* "$CROS/"
