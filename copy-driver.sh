@@ -28,6 +28,7 @@ if grep -q MT7615E "$CROS/$CONFIG"; then
 	echo "Build patch already applied"
 else
 	patch -d "$CROS" -p1 < ./v4.14/mt76.patch
+    patch -d "$CROS" -p1 < ./v4.14/0001-add-config-for-mt7663u.patch
 fi
 
 cp -av ./v4.14/files/* "$CROS/"
